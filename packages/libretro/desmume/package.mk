@@ -21,7 +21,7 @@
 PKG_NAME="desmume"
 PKG_VERSION="f5df182"
 PKG_REV="1"
-PKG_ARCH="any"
+PKG_ARCH="i386 x86_64 arm"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/desmume2015"
 PKG_GIT_URL="$PKG_SITE"

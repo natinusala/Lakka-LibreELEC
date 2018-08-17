@@ -37,7 +37,7 @@ if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   TARGET_PREFIX=aarch64-elf-
 fi
 
-if [ "$UBOOT_SOC" = "rk3328" ]; then
+if [ "$UBOOT_SOC" = "rk3328" ] || [ "$UBOOT_SOC" = "rk3399" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rkbin"
   PKG_NEED_UNPACK="$(get_pkg_directory rkbin)"
 fi

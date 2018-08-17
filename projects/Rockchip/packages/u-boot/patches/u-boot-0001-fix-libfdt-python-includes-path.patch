@@ -1,0 +1,11 @@
+--- a/tools/Makefile	2018-08-14 02:21:32.544806000 +0200
++++ b/tools/Makefile	2018-08-14 02:21:51.364476713 +0200
+@@ -133,7 +133,7 @@
+ 	$(Q)cp $(LIBFDT_SWIG) tools/.
+ 	$(Q)unset CC; \
+ 	unset CROSS_COMPILE; \
+-	LDFLAGS="$(HOSTLDFLAGS)" CFLAGS= VERSION="u-boot-$(UBOOTVERSION)" \
++	LDFLAGS="$(HOSTLDFLAGS)" CFLAGS="`python-config --includes`" VERSION="u-boot-$(UBOOTVERSION)" \
+ 		CPPFLAGS="$(_hostc_flags)" OBJDIR=tools \
+ 		SOURCES="$(LIBFDT_SRCS) tools/libfdt.i" \
+ 		SWIG_OPTS="-I$(srctree)/lib/libfdt -I$(srctree)/lib" \
