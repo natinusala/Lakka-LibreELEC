@@ -71,24 +71,32 @@ makeinstall_target() {
     cat u-boot-dtb.bin >> idbloader.img
 
     cp -PRv idbloader.img $INSTALL/usr/share/bootloader
-  elif [ "$UBOOT_SOC" = "rk3328" ]; then
+  elif [ "$UBOOT_SOC" = "rk3328" ] ||[ "$UBOOT_SOC" = "rk3399" ] ; then
+  
+      case "$UBOOT_SOC" in
+        rk3328)
+          DATAFILE="$PROJECT_DIR/$PROJECT/bootloader/rk3328_ddr_786MHz_v1.08.bin"
+          LOADER="$PROJECT_DIR/$PROJECT/bootloader/rk3328_miniloader_v2.44.bin"
+          BL31="$(get_build_dir rkbin)/rk33/rk3328_bl31_v1.34.bin"
+          ;;
+        rk3399)
+          DATAFILE="$PROJECT_DIR/$PROJECT/bootloader/rk3399_ddr_800MHz_v1.14.bin"
+          LOADER="$PROJECT_DIR/$PROJECT/bootloader/rk3399_miniloader_v1.15.bin"
+          BL31="$PROJECT_DIR/$PROJECT/bootloader/rk3399_bl31_v1.18.elf"
+          ;;
+      esac
+    
     $(get_build_dir rkbin)/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img 0x200000
+    
+    dd if=$DATAFILE of=ddr.bin bs=4 skip=1
 
-    if [ -f $PROJECT_DIR/$PROJECT/bootloader/rk3328_ddr_786MHz_v1.08.bin ]; then
-      dd if=$PROJECT_DIR/$PROJECT/bootloader/rk3328_ddr_786MHz_v1.08.bin of=ddr.bin bs=4 skip=1
-    else
-      dd if=$(get_build_dir rkbin)/rk33/rk3328_ddr_786MHz_v1.06.bin of=ddr.bin bs=4 skip=1
-    fi
     tools/mkimage \
       -n $UBOOT_SOC \
       -T rksd \
       -d ddr.bin \
       idbloader.img
-    if [ -f $PROJECT_DIR/$PROJECT/bootloader/rk3328_miniloader_v2.44.bin ]; then
-      cat $PROJECT_DIR/$PROJECT/bootloader/rk3328_miniloader_v2.44.bin >> idbloader.img
-    else
-      cat $(get_build_dir rkbin)/rk33/rk3328_miniloader_v2.43.bin >> idbloader.img
-    fi
+      
+    cat $LOADER >> idbloader.img
 
     cat >trust.ini <<EOF
 [VERSION]
@@ -98,7 +106,7 @@ MINOR=2
 SEC=0
 [BL31_OPTION]
 SEC=1
-PATH=$(get_build_dir rkbin)/rk33/rk3328_bl31_v1.34.bin
+PATH=$BL31
 ADDR=0x10000
 [BL32_OPTION]
 SEC=0

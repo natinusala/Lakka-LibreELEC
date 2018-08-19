@@ -33,7 +33,7 @@
     KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rockpro64.dtb"
 
   # Mali GPU family
-    MALI_FAMILY="860"
+    MALI_FAMILY="t860"
 
   # kernel image name
     KERNEL_NAME="Image"
@@ -45,4 +45,4 @@
     ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS rfkill"
 
   # kernel serial console
-  # TODO  -  EXTRA_CMDLINE="console=uart8250,mmio32,0xff130000"
+  EXTRA_CMDLINE="console=uart8250,mmio32,0xff1a0000 console=tty0"
