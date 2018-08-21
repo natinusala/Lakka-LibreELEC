@@ -16,19 +16,25 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-# installing bootloader
-if [ -f "$RELEASE_DIR/3rdparty/bootloader/idbloader.img" ]; then
-  echo "image: burn idbloader.img..."
-  dd if="$RELEASE_DIR/3rdparty/bootloader/idbloader.img" of="$DISK" bs=512 seek=64 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
-fi
-if [ -f "$RELEASE_DIR/3rdparty/bootloader/uboot.img" ]; then
-  echo "image: burn uboot.img..."
-  dd if="$RELEASE_DIR/3rdparty/bootloader/uboot.img" of="$DISK" bs=512 seek=16384 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
-fi
-if [ -f "$RELEASE_DIR/3rdparty/bootloader/trust.img" ]; then
-  echo "image: burn trust.img..."
-  dd if="$RELEASE_DIR/3rdparty/bootloader/trust.img" of="$DISK" bs=512 seek=24576 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
-fi
+# create boot partitions
+# system starts at 32768
+echo "image: creating partitions..."
+parted -s "$DISK" unit s mkpart loader1      64 8063      # 3.91MB
+parted -s "$DISK" unit s mkpart reserved1    8064 8191    # 64KB
+parted -s "$DISK" unit s mkpart reserved2    8192 16383   # 4MB
+parted -s "$DISK" unit s mkpart loader2      16384 24575  # 4MB
+parted -s "$DISK" unit s mkpart atf          24576 32767  # 4MB
+
+# write bootloader
+echo "image: writing bootloader..."
+echo "image: writing idbloader.img..."
+dd if="$RELEASE_DIR/3rdparty/bootloader/idbloader.img" of="$DISK" bs=512 seek=64 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
+
+echo "image: writing uboot.img..."
+dd if="$RELEASE_DIR/3rdparty/bootloader/uboot.img" of="$DISK" bs=512 seek=16384 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
+
+echo "image: writing trust.img..."
+dd if="$RELEASE_DIR/3rdparty/bootloader/trust.img" of="$DISK" bs=512 seek=24576 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
 
 CMDLINE="quiet ssh"
 
