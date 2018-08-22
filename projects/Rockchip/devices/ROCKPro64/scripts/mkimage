@@ -16,15 +16,6 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-# create boot partitions
-# system starts at 32768
-echo "image: creating partitions..."
-parted -s "$DISK" unit s mkpart loader1      64 8063      # 3.91MB
-parted -s "$DISK" unit s mkpart reserved1    8064 8191    # 64KB
-parted -s "$DISK" unit s mkpart reserved2    8192 16383   # 4MB
-parted -s "$DISK" unit s mkpart loader2      16384 24575  # 4MB
-parted -s "$DISK" unit s mkpart atf          24576 32767  # 4MB
-
 # write bootloader
 echo "image: writing bootloader..."
 echo "image: writing idbloader.img..."

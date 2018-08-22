@@ -87,27 +87,22 @@ makeinstall_target() {
       esac
     
     $(get_build_dir rkbin)/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img 0x200000
-    
-    dd if=$DATAFILE of=ddr.bin bs=4 skip=1
 
     tools/mkimage \
       -n $UBOOT_SOC \
       -T rksd \
-      -d ddr.bin \
+      -d "$DATAFILE" \
       idbloader.img
       
-    cat $LOADER >> idbloader.img
+    cat "$LOADER" >> idbloader.img
 
     cat >trust.ini <<EOF
-[VERSION]
-MAJOR=1
-MINOR=2
 [BL30_OPTION]
 SEC=0
 [BL31_OPTION]
 SEC=1
 PATH=$BL31
-ADDR=0x10000
+ADDR=0x00010000
 [BL32_OPTION]
 SEC=0
 [BL33_OPTION]
@@ -115,7 +110,7 @@ SEC=0
 [OUTPUT]
 PATH=trust.img
 EOF
-    $(get_build_dir rkbin)/tools/trust_merger trust.ini
+    $(get_build_dir rkbin)/tools/trust_merger --verbose trust.ini
 
     cp -PRv idbloader.img $INSTALL/usr/share/bootloader
     cp -PRv uboot.img $INSTALL/usr/share/bootloader
