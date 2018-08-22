@@ -1,0 +1,10 @@
+--- a/arch/arm/dts/rk3399-evb.dts
++++ b/arch/arm/dts/rk3399-evb.dts
+@@ -155,6 +155,7 @@
+ };
+ 
+ &sdmmc {
++	u-boot,dm-pre-reloc;
+ 	bus-width = <4>;
+ 	status = "okay";
+ };
