@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="u-boot"
-PKG_VERSION="2017.11"
-PKG_SHA256="6a018fd3caf58f3dcfa23ee989a82bd35df03af71872b9dca8c6d758a0d26c05"
+PKG_VERSION="2018.07"
+PKG_SHA256="9f10df88bc91b35642e461217f73256bbaeeca9ae2db8db56197ba5e89e1f6d4"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.denx.de/wiki/U-Boot"

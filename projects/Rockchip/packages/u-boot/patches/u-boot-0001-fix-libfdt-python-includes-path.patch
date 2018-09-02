@@ -1,11 +1,11 @@
---- a/tools/Makefile	2018-08-14 02:21:32.544806000 +0200
-+++ b/tools/Makefile	2018-08-14 02:21:51.364476713 +0200
-@@ -133,7 +133,7 @@
- 	$(Q)cp $(LIBFDT_SWIG) tools/.
- 	$(Q)unset CC; \
- 	unset CROSS_COMPILE; \
--	LDFLAGS="$(HOSTLDFLAGS)" CFLAGS= VERSION="u-boot-$(UBOOTVERSION)" \
-+	LDFLAGS="$(HOSTLDFLAGS)" CFLAGS="`python-config --includes`" VERSION="u-boot-$(UBOOTVERSION)" \
- 		CPPFLAGS="$(_hostc_flags)" OBJDIR=tools \
- 		SOURCES="$(LIBFDT_SRCS) tools/libfdt.i" \
- 		SWIG_OPTS="-I$(srctree)/lib/libfdt -I$(srctree)/lib" \
+--- a/scripts/dtc/pylibfdt/Makefile	2018-07-09 16:24:14.000000000 +0200
++++ b/scripts/dtc/pylibfdt/Makefile	2018-09-02 22:06:07.945632774 +0200
+@@ -18,7 +18,7 @@
+ 		CC="$(HOSTCC)" LDSHARED="$(HOSTCC) -shared " \
+ 		LDFLAGS="$(HOSTLDFLAGS)" \
+ 		VERSION="u-boot-$(UBOOTVERSION)" \
+-		CPPFLAGS="$(HOSTCFLAGS) -I$(LIBFDT_srcdir)" OBJDIR=$(obj) \
++		CPPFLAGS="$(HOSTCFLAGS) -I$(LIBFDT_srcdir) `python-config --includes`" OBJDIR=$(obj) \
+ 		SOURCES="$(PYLIBFDT_srcs)" \
+ 		SWIG_OPTS="-I$(LIBFDT_srcdir) -I$(LIBFDT_srcdir)/.." \
+ 		$(PYTHON) $< --quiet build_ext --inplace

@@ -2,11 +2,13 @@ diff --git a/arch/arm/dts/rk3399-evb.dts b/arch/arm/dts/rk3399-evb.dts
 index edf48fb..91d3193 100644
 --- a/arch/arm/dts/rk3399-evb.dts
 +++ b/arch/arm/dts/rk3399-evb.dts
-@@ -16,6 +16,7 @@ 
- 
+@@ -17,7 +17,7 @@
  	chosen {
  		stdout-path = &uart2;
-+		u-boot,spl-boot-order = &sdmmc, &sdhci;
+ 		u-boot,spl-boot-order = \
+-			&sdhci, &sdmmc;
++			&sdmmc, &sdhci;
  	};
  
  	vdd_center: vdd-center {
+

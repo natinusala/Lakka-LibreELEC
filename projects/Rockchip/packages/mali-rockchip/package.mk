@@ -40,8 +40,6 @@ if [ "$MALI_FAMILY" = "t760" -a "$MALI_REVISION" = "r1p0" ]; then
   LIBMALI_FILE="libmali-midgard-t76x-r14p0-r1p0-gbm.so"
 elif [ "$MALI_FAMILY" = "t760" ]; then
   LIBMALI_FILE="libmali-midgard-t76x-r14p0-r0p0-gbm.so"
-elif [ "$TARGET_ARCH" = "aarch64" -a "$MALI_FAMILY" = "t860" ]; then
-  LIBMALI_FILE="libmali-midgard-4th-r13p0-gbm.so"
 elif [ "$MALI_FAMILY" = "t860" ]; then
   LIBMALI_FILE="libmali-midgard-t86x-r14p0-gbm.so"
 elif [ "$MALI_FAMILY" = "450" ]; then
