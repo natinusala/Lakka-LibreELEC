@@ -21,7 +21,7 @@
 PKG_NAME="parallel-n64"
 PKG_VERSION="55c4ee7"
 PKG_REV="1"
-PKG_ARCH="any"
+PKG_ARCH="arm i386 x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"
 PKG_GIT_URL="$PKG_SITE"
