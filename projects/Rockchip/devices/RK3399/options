@@ -24,13 +24,24 @@
   # Configuration for u-boot
     UBOOT_CONFIG="evb-rk3399_defconfig"
     UBOOT_SOC="rk3399"
-    UBOOT_DTB="rk3399-rockpro64.dtb"
-
+    
+  # Board-specific configuration
+  case $BOARD in
+    ROCKPro64)
+      UBOOT_DTB="rk3399-rockpro64.dtb"
+      KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rockpro64.dtb"
+      ;;
+    Rock960)
+      UBOOT_DTB="rk3399-rock960.dtb"
+      KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rock960.dtb"
+      ;;
+    *)
+      echo "Invalid or missing board"
+      exit 1
+    esac
+    
   # Kernel target
     KERNEL_TARGET="Image"
-
-  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
-    KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rockpro64.dtb"
 
   # Mali GPU family
     MALI_FAMILY="t860"

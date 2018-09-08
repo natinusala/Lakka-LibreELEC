@@ -70,6 +70,8 @@ fi
 # Lakka specific naming scheme
 if [ -n "$SYSTEM" ]; then
   LIBREELEC_ARCH="$PROJECT.$SYSTEM.$TARGET_ARCH"
+elif [ -n "$BOARD" ]; then
+  LIBREELEC_ARCH="$PROJECT.$BOARD.$TARGET_ARCH"
 elif [ -n "$DEVICE" ]; then
   LIBREELEC_ARCH="$PROJECT.$DEVICE.$TARGET_ARCH"
 else
