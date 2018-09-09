@@ -18,37 +18,33 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="dolphin"
-PKG_VERSION="a5bce7d"
+PKG_NAME="desmume-2015"
+PKG_VERSION="5957aa0"
 PKG_REV="1"
-PKG_ARCH="x86_64"
+PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/libretro/dolphin"
+PKG_SITE="https://github.com/libretro/desmume2015"
 PKG_GIT_URL="$PKG_SITE"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements."
-PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements."
+PKG_SHORTDESC="libretro wrapper for desmume NDS emulator."
+PKG_LONGDESC="libretro wrapper for desmume NDS emulator."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="yes"
 
-if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez"
-fi
-
-PKG_CMAKE_SCRIPT="$PKG_BUILD/CMakeLists.txt"
-
-PKG_CMAKE_OPTS_TARGET="-DLIBRETRO=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC}"
-
-pre_make_target() {
-  # build fix for cross-compiling Dolphin, from Dolphin forums
-  find $PKG_BUILD -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
+make_target() {
+  if [ "$ARCH" == "arm" ]; then
+    make -C desmume platform=armv LDFLAGS="$LDFLAGS -lpthread" # DESMUME_JIT_ARM=1
+  elif [ "$ARCH" == "aarch64" ]; then
+    make -C desmume platform=arm64-unix LDFLAGS="$LDFLAGS -lpthread"
+  else
+    make -C desmume LDFLAGS="$LDFLAGS -lpthread"
+  fi
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_BUILD/.$TARGET_NAME/dolphin_libretro.so $INSTALL/usr/lib/libretro/
+  cp desmume/desmume2015_libretro.so $INSTALL/usr/lib/libretro/
 }

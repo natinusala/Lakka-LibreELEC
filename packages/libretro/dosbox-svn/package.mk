@@ -18,37 +18,41 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="dolphin"
-PKG_VERSION="a5bce7d"
+PKG_NAME="dosbox-svn"
+PKG_VERSION="b3856be"
 PKG_REV="1"
-PKG_ARCH="x86_64"
+PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/libretro/dolphin"
-PKG_GIT_URL="$PKG_SITE"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_SITE="https://github.com/fr500/dosbox-svn"
+PKG_URL="https://github.com/fr500/dosbox-svn/archive/$PKG_VERSION.zip"
+PKG_DEPENDS_TARGET="toolchain SDL SDL_net"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements."
-PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements."
+PKG_SHORTDESC="Upstream port of DOSBox to libretro"
+PKG_LONGDESC="Upstream port of DOSBox to libretro"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="yes"
 
-if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez"
-fi
+pre_configure_target() {
+  strip_lto
+}
 
-PKG_CMAKE_SCRIPT="$PKG_BUILD/CMakeLists.txt"
-
-PKG_CMAKE_OPTS_TARGET="-DLIBRETRO=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC}"
-
-pre_make_target() {
-  # build fix for cross-compiling Dolphin, from Dolphin forums
-  find $PKG_BUILD -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
+make_target() {
+  if [ "$ARCH" = "aarch64" ]; then
+    make -C libretro target=arm64 WITH_EMBEDDED_SDL=0
+  elif [ "$ARCH" = "arm" ]; then
+    make -C libretro target=arm WITH_EMBEDDED_SDL=0
+  elif [ "$ARCH" = "x86_64" ]; then
+    make -C libretro target=x86_64 WITH_EMBEDDED_SDL=0
+  elif [ "$ARCH" = "i386" ]; then 
+    make -C libretro target=x86 WITH_EMBEDDED_SDL=0
+  else
+    make -C libretro WITH_EMBEDDED_SDL=0
+  fi
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_BUILD/.$TARGET_NAME/dolphin_libretro.so $INSTALL/usr/lib/libretro/
+  cp $PKG_BUILD/libretro/dosbox_svn_libretro.so $INSTALL/usr/lib/libretro
 }
