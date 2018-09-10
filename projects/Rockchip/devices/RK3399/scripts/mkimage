@@ -33,8 +33,8 @@ CMDLINE="quiet ssh"
 cat << EOF > "$LE_TMP/extlinux.conf"
 label $DISTRO
     kernel /$KERNEL_NAME
-    fdt /rk3399-rockpro64.dtb
-    append earlyprintk boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE console=uart8250,mmio32,0xff1a0000 console=tty0 ethaddr=\${ethaddr} eth1addr=\${eth1addr} serial=\${serial#}
+    fdt /$UBOOT_DTB
+    append earlyprintk boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE console=tty0 ethaddr=\${ethaddr} eth1addr=\${eth1addr} serial=\${serial#} $EXTRA_CMDLINE
 EOF
 
 # copy extlinux.conf to part1

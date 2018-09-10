@@ -30,10 +30,12 @@
     ROCKPro64)
       UBOOT_DTB="rk3399-rockpro64.dtb"
       KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rockpro64.dtb"
+      EXTRA_CMDLINE="console=uart8250,mmio32,0xff1a0000"
       ;;
     Rock960)
       UBOOT_DTB="rk3399-rock960.dtb"
       KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rock960.dtb"
+      EXTRA_CMDLINE=""
       ;;
     *)
       echo "Invalid or missing board"
