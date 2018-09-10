@@ -35,7 +35,7 @@
     ROCK960)
       UBOOT_DTB="rk3399-rock960.dtb"
       KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rock960.dtb"
-      EXTRA_CMDLINE=""
+      EXTRA_CMDLINE="console=ttyFIQ0,1500000n8"
       ;;
     *)
       echo "Invalid or missing board"
