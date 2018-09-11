@@ -88,11 +88,4 @@ makeinstall_target() {
     ln -sf libmali.so $INSTALL/usr/lib/libEGL.so
     ln -sf libmali.so $INSTALL/usr/lib/libGLESv2.so
     ln -sf libmali.so $INSTALL/usr/lib/libgbm.so
-
-  mkdir -p $INSTALL/usr/lib/modules-load.d
-    if [ "$MALI_FAMILY" = "t760" -o "$MALI_FAMILY" = "t860" ]; then
-      echo "mali_kbase" > $INSTALL/usr/lib/modules-load.d/mali.conf
-    elif [ "$MALI_FAMILY" = "450" -o "$MALI_FAMILY" = "400" ]; then
-      echo "mali" > $INSTALL/usr/lib/modules-load.d/mali.conf
-    fi
 }

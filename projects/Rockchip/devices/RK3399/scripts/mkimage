@@ -27,14 +27,12 @@ dd if="$RELEASE_DIR/3rdparty/bootloader/uboot.img" of="$DISK" bs=512 seek=16384 
 echo "image: writing trust.img..."
 dd if="$RELEASE_DIR/3rdparty/bootloader/trust.img" of="$DISK" bs=512 seek=24576 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
 
-CMDLINE="quiet ssh"
-
 # create extlinux.conf
 cat << EOF > "$LE_TMP/extlinux.conf"
 label $DISTRO
     kernel /$KERNEL_NAME
     fdt /$UBOOT_DTB
-    append earlyprintk boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE console=tty0 ethaddr=\${ethaddr} eth1addr=\${eth1addr} serial=\${serial#} $EXTRA_CMDLINE
+    append earlyprintk boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE ethaddr=\${ethaddr} eth1addr=\${eth1addr} serial=\${serial#} $EXTRA_CMDLINE console=tty0 quiet ssh
 EOF
 
 # copy extlinux.conf to part1

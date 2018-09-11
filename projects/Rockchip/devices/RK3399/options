@@ -38,7 +38,7 @@
       EXTRA_CMDLINE="console=ttyFIQ0,1500000n8"
       ;;
     *)
-      echo "Invalid or missing board"
+      echo "Invalid or missing board $BOARD"
       exit 1
     esac
     
