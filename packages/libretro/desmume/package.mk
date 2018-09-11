@@ -34,11 +34,18 @@ PKG_LONGDESC="libretro wrapper for desmume NDS emulator."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-if [ "$OPENGL" == "no" ]; then
+if [ "$OPENGL" == "no" -o "$OPENGL" == "" ]; then
   OGL=0
 else
   OGL=1
 fi
+
+post_patch() {
+  # enable OGL back if present
+  if [ "$OPENGL" != "no" -a "$OPENGL" != "" ]; then
+    patch --reverse -d `echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 < $PKG_DIR/patches/desmume-002-disable-ogl.patch
+  fi
+}
 
 make_target() {
   if [ "$ARCH" == "arm" ]; then
