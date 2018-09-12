@@ -22,20 +22,27 @@
     esac
 
   # Configuration for u-boot
-    UBOOT_CONFIG="evb-rk3399_defconfig"
     UBOOT_SOC="rk3399"
     
   # Board-specific configuration
   case $BOARD in
     ROCKPro64)
+      UBOOT_CONFIG="evb-rk3399_defconfig"
       UBOOT_DTB="rk3399-rockpro64.dtb"
       KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rockpro64.dtb"
       EXTRA_CMDLINE="console=uart8250,mmio32,0xff1a0000"
       ;;
     ROCK960)
+      UBOOT_CONFIG="evb-rk3399_defconfig"
       UBOOT_DTB="rk3399-rock960.dtb"
       KERNEL_MAKE_EXTRACMD="rockchip/rk3399-rock960.dtb"
       EXTRA_CMDLINE="console=ttyFIQ0,1500000n8"
+      ;;
+    OdroidN1)
+      UBOOT_CONFIG="odroidn1_defconfig"
+      UBOOT_DTB="rk3399-odroidn1.dtb"
+      KERNEL_MAKE_EXTRACMD="rockchip/rk3399-odroidn1.dtb"
+      EXTRA_CMDLINE=""
       ;;
     *)
       echo "Invalid or missing board $BOARD"

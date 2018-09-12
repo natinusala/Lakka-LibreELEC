@@ -4,6 +4,7 @@
 
 * ROCKPro64
 * Rock960
+* Odroid N1
 
 **Known issues**
 
@@ -17,3 +18,4 @@
 
 * `PROJECT=Rockchip DEVICE=RK3399 BOARD=ROCKPro64 ARCH=aarch64 make image`
 * `PROJECT=Rockchip DEVICE=RK3399 BOARD=ROCK960 ARCH=arch64 make image`
+* `PROJECT=Rockchip DEVICE=RK3399 BOARD=OdroidN1 ARCH=arch64 make image`
